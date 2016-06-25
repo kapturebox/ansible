@@ -3,6 +3,8 @@
 DESTDIR=$(dirname $0)/pkg
 VERSION=${BUILD_NUMBER:-snapshot}
 
+mkdir -p $DESTDIR
+
 fpm -s dir -t deb -n kapture-ansible \
   -v $VERSION \
   -f \
