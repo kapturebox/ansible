@@ -11,7 +11,9 @@ fpm -s dir -t deb -n kapture-ansible \
   -a all \
   -f \
   -p $DESTDIR \
+  --exclude "**/$DESTDIR" \
   --exclude '**/.vagrant*' \
   --exclude '**/.git*' \
   --exclude '**/Vagrantfile' \
+  --exclude '**/package.sh' \
   ./=/var/kapture/ansible
