@@ -1,4 +1,5 @@
 ---
+
 # tasks file for ansible/roles/initial-setup
 - name: ensure system is up to date
   apt: upgrade=dist
@@ -141,4 +142,4 @@
     host: "{{ inventory_hostname }}"
     state: started
     port: 22
-  when: system_upgraded.changed and pi is defined and pi
+  when: system_upgraded.changed and pi is defined and pi and reboots_during_run

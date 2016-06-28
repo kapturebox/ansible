@@ -1,7 +1,15 @@
 ---
 ##############################################
-### SETUP BANANAPI (meant to be remote)
+### SETUP REMOTE DEVICE (meant to be remote)
 ##############################################
+
+- hosts: all
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: verify ansible prereq's exist
+      raw: (which python && which aptitude ) || apt-get install -y python python-apt aptitude
+
 
 - hosts: all
   become: yes

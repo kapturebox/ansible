@@ -1,5 +1,7 @@
 ---
 
+reboots_during_run: no
+
 systemname: kapture
 kapture_user: kapture
 
