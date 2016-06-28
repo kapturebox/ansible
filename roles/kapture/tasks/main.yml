@@ -26,8 +26,8 @@
     home: /var/lib/kapture
     state: present
 
-- name: ensure ubuntu user is in kapture group
-  user: name=ubuntu groups=kapture,sudo
+- name: ensure admin user is in kapture group
+  user: name="{{ ansible_ssh_user }}" groups=kapture,sudo
   when: pi is defined and pi
 
 - name: ensure vagrant user is in kapture group

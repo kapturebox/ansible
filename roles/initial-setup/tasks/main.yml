@@ -52,9 +52,9 @@
     state: present
     regexp: "^%sudo   ALL=(ALL:ALL) ALL$"
     line:    "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL"
-  when: ansible_lsb.codename == "xenial"
+  when: pi is defined and pi == true
 
-- name: ensure kapture users is created
+- name: ensure kapture user is created
   user:
     groups: kapture
     name: "{{ kapture_user }}"

@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-DESTDIR=$(dirname $0)/pkg
+DESTDIR="$(dirname $0)/pkg"
 VERSION=${BUILD_NUMBER:-snapshot}
 
 mkdir -p $DESTDIR
@@ -11,7 +11,7 @@ fpm -s dir -t deb -n kapture-ansible \
   -a all \
   -f \
   -p $DESTDIR \
-  --exclude "**/$DESTDIR" \
+  --exclude "**/*.deb" \
   --exclude '**/.vagrant*' \
   --exclude '**/.git*' \
   --exclude '**/Vagrantfile' \
