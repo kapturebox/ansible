@@ -3,6 +3,7 @@
 # tasks file for ansible/roles/initial-setup
 - name: ensure system is up to date
   apt: upgrade=dist
+  when: upgrade_dist
   register: system_upgraded
 
 - name: rotate openssh host keys
@@ -27,7 +28,7 @@
   when: ansible_lsb.codename == "xenial"
 
 - name: setup new version of nodejs
-  shell: curl -sL https://deb.nodesource.com/setup_5.x |  bash -
+  shell: curl -sL https://deb.nodesource.com/setup_6.x |  bash -
 
 - name: setup initial needed packages
   apt: pkg="{{ item }}" state=present force=yes
@@ -44,16 +45,20 @@
     - cpufreqd
     - cpufrequtils
 
+- name: install ngrok if needed
+  command: npm install -g ngrok
+  when: install_ngrok
+
 - name: ensure kapture group is setup correctly
   group: name=kapture system=yes state=present
 
-- name: ensure sudo group doesnt require password sudo (if xenial)
+- name: ensure sudo group has passwordless sudo
   lineinfile:
     dest: /etc/sudoers
     state: present
     regexp: "^%sudo   ALL=(ALL:ALL) ALL$"
     line:    "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL"
-  when: pi is defined and pi == true
+  when: pi is defined and pi
 
 - name: ensure kapture user is created
   user:

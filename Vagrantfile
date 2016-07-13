@@ -4,7 +4,7 @@
 disk = '/tmp/kapture-vagrant-storage.vdi'
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "gbarbieru/xenial"
   # config.vm.box_check_update = false
   config.vm.network "private_network", ip: "192.168.33.11"
   # config.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)"
@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
     unless File.exist?(disk)
       vb.customize ['createhd', '--filename', disk, '--size', 1 * 1024]
     end
-    vb.customize ['storageattach', :id, '--storagectl', 'SATAController', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', disk]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', disk]
   end
 
 
