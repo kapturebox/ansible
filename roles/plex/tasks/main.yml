@@ -7,12 +7,14 @@
 #######################
 
 
-- name: install pip from apt-get if not Raspbian
+- name: install pip from apt
   apt: pkg=python-pip state=present
   when: ansible_lsb.id != "Raspbian"
 
-- name: install pip using easy_install if Raspbian
-  easy_install: name=pip state=present
+- block:
+    - name: install pip using easy_install if Raspbian
+      apt: name=python-setuptools state=present
+    - easy_install: name=pip state=present
   when: ansible_lsb.id == "Raspbian"
 
 - name: install httplib2 for calling plex commands via ansible

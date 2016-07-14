@@ -1,7 +1,7 @@
 ---
 
-reboots_during_run: no
-upgrade_dist: no
+reboots_during_run: yes
+upgrade_dist: yes
 install_ngrok: no
 
 systemname: kapture

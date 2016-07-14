@@ -1,5 +1,7 @@
 ---
 # sets up a disk based on the defaults and ansible args
+- name: fsck usb disk just to be safe
+  command: "e2fsck -fp {{ storage_block_device }}"
 
 - name: format partition
   filesystem:

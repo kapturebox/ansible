@@ -33,7 +33,7 @@ Vagrant.configure(2) do |config|
     # install some tools for development on vagrant box, and ansible
     export DEBIAN_FRONTEND=noninteractive
     apt-get install -y python-pip devscripts debhelper ruby ruby-dev git iptables-persistent python-dev libffi-dev libssl-dev
-    pip install --upgrade setuptools
+    # pip install --upgrade setuptools
     pip install ansible markupsafe
 
     gem install fpm

@@ -63,16 +63,21 @@
     mode: 0775
     group: kapture
 
-- name: install pip from apt-get if not Raspbian
+- name: install pip from apt
   apt: pkg=python-pip state=present
   when: ansible_lsb.id != "Raspbian"
 
-- name: install pip using easy_install if Raspbian
-  easy_install: name=pip state=present
+- block:
+    - name: install pip using easy_install if Raspbian
+      apt: name=python-setuptools state=present
+    - easy_install: name=pip state=present
   when: ansible_lsb.id == "Raspbian"
-
+#
 - name: install ansible for running locally
-  pip: name=ansible
+  pip: name="{{ item.name }}" version="{{ item.version | default(omit) }}" state=present
+  with_items:
+    - { name: ansible }
+    - { name: setuptools, version: 23.0.0 }
 
 - name: install ngrok if needed
   command: npm install -g ngrok
