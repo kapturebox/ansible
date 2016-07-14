@@ -74,7 +74,17 @@
 - name: install ansible for running locally
   pip: name=ansible
 
+- name: install ngrok if needed
+  command: npm install -g ngrok
+  when: install_ngrok
 
+- name: ensure sudo group has passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%sudo   ALL=(ALL:ALL) ALL$"
+    line:    "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL"
+  when: pi is defined and pi
 
 ######################
 ## KAPTURE APP

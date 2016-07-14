@@ -2,7 +2,7 @@
 
 reboots_during_run: no
 upgrade_dist: no
-install_ngrok: yes
+install_ngrok: no
 
 systemname: kapture
 kapture_user: kapture

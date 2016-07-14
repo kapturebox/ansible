@@ -34,7 +34,6 @@
   apt: pkg="{{ item }}" state=present force=yes
   with_items:
     - python2.7-dev
-    - python-setuptools
     - nodejs
     - apt-transport-https
     - usbmount
@@ -44,21 +43,10 @@
     - acl
     - cpufreqd
     - cpufrequtils
-
-- name: install ngrok if needed
-  command: npm install -g ngrok
-  when: install_ngrok
+    - vim
 
 - name: ensure kapture group is setup correctly
   group: name=kapture system=yes state=present
-
-- name: ensure sudo group has passwordless sudo
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: "^%sudo   ALL=(ALL:ALL) ALL$"
-    line:    "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL"
-  when: pi is defined and pi
 
 - name: ensure kapture user is created
   user:
