@@ -33,11 +33,12 @@
   when: ansible_architecture == 'x86_64'
 
 - name: install plex server and components
-  apt: pkg={{ item }} state=latest update_cache=yes force=yes
+  apt: pkg="{{ item }}" state=latest update_cache=yes force=yes
   with_items:
     - libc6
     - libav-tools
     - plexmediaserver
+    - plexmediaserver-installer
 
 - name: ensure service is running
   service: name=plexmediaserver state=running

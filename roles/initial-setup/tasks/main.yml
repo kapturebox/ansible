@@ -2,9 +2,10 @@
 
 # tasks file for ansible/roles/initial-setup
 - name: ensure system is up to date
-  apt: upgrade=dist
+  apt: upgrade=full update_cache=yes
   when: upgrade_dist
   register: system_upgraded
+  notify: restart kapture
 
 - name: rotate openssh host keys
   shell: rm -rf /etc/ssh/ssh_host_* && dpkg-reconfigure openssh-server
@@ -116,19 +117,3 @@
   with_items: "{{ storage_directories }}"
   tags:
     - perms
-
-- name: restart machine if system upgraded
-  command: shutdown -r now "Ansible updates triggered"
-  async: 0
-  poll: 0
-  ignore_errors: true
-  when: system_upgraded.changed and pi is defined and pi
-
-- name: waiting for server to come back
-  become: false
-  connection: local
-  wait_for:
-    host: "{{ inventory_hostname }}"
-    state: started
-    port: 22
-  when: system_upgraded.changed and pi is defined and pi and reboots_during_run
