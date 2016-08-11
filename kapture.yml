@@ -6,6 +6,6 @@
   roles:
     - plex
     - transmission
+    - kapture
     - netatalk
     - flexget
-    - kapture

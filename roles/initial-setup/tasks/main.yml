@@ -27,14 +27,10 @@
     enabled: no
   when: ansible_lsb.codename == "xenial"
 
-- name: setup new version of nodejs
-  shell: curl -sL https://deb.nodesource.com/setup_6.x |  bash -
-
 - name: setup initial needed packages
   apt: pkg="{{ item }}" state=present force=yes
   with_items:
     - python2.7-dev
-    - nodejs
     - apt-transport-https
     - usbmount
     - libffi-dev

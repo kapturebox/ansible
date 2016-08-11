@@ -91,6 +91,13 @@
     line:    "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL"
   when: pi is defined and pi
 
+
+- name: setup new version of nodejs
+  shell: curl -sL https://deb.nodesource.com/setup_6.x |  bash -
+
+- name: ensure node is installed
+  apt: pkg="nodejs=6*" state=present
+
 ######################
 ## KAPTURE APP
 ######################
