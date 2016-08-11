@@ -14,7 +14,8 @@
 - block:
     - name: install pip using easy_install if Raspbian
       apt: name=python-setuptools state=present
-    - easy_install: name=pip state=present
+    - name: ensure pip is installed via easy_install
+      easy_install: name=pip state=present
   when: ansible_lsb.id == "Raspbian"
 
 - name: install httplib2 for calling plex commands via ansible
