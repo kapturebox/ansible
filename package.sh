@@ -9,7 +9,6 @@ fpm -s dir -t deb -n kapture-ansible \
   -v $VERSION \
   -f \
   -a all \
-  -f \
   -p $DESTDIR \
   --exclude "**/*.deb" \
   --exclude '**/.vagrant*' \
