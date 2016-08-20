@@ -7,10 +7,10 @@
 
 # should already have pip from initial setup
 - name: install flexget and deps
-  pip: name="{{ item.name }}" version="{{ item.version | default(omit) }}"
+  pip: name="{{ item }}" state=latest
   with_items:
-    - {name: flexget, version: 2.0.19 }
-    - {name: transmissionrpc }
+    - flexget
+    - transmissionrpc
   notify: restart transmission
 
 - name: create flexget config dir

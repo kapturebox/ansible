@@ -7,6 +7,8 @@ install_ngrok: no
 systemname: kapture
 kapture_user: kapture
 
+kapture_app_branch: stable  # stable / unstable
+
 storage_path: /media/usb  # should be mounted and handled automatically with usbmount
 storage_block_device: /dev/sda
 transmission_user: admin
