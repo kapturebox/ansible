@@ -39,7 +39,6 @@
     - libc6
     - libav-tools
     - plexmediaserver
-    - plexmediaserver-installer
 
 - name: ensure service is running
   service: name=plexmediaserver state=running
