@@ -1,0 +1,34 @@
+---
+# handlers file for roles/flexget-daemon
+
+- name: reload systemd
+  command: >
+    /bin/systemctl daemon-reload
+
+- name: enable flexget service
+  service:
+    name: flexget
+    enabled: yes
+
+- name: stop flexget service
+  service:
+    name: flexget
+    state: stopped
+
+- name: set flexget web password
+  become: yes
+  become_user: "{{ flexget_system_user }}"
+  command: >
+    {{ flexget_binary }} -c {{ flexget_config_dir }}/config.yml 
+    web passwd {{ flexget_password }}
+
+- name: start flexget service
+  service:
+    name: flexget
+    state: started
+
+- name: restart flexget service
+  service:
+    name: flexget
+    state: restarted
+
