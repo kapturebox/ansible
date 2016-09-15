@@ -8,4 +8,5 @@
     - transmission
     - kapture
     - netatalk
-    - flexget
+    - flexget-daemon
+    - flexget-cron

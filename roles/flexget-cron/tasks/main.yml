@@ -1,0 +1,9 @@
+---
+
+- name: disable flexget cron mechanism
+  include: disable.yml
+  when: not flexget_cron_enabled
+
+- name: enable flexget cron mechanism
+  include: enable.yml
+  when: flexget_cron_enabled

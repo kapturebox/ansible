@@ -46,12 +46,30 @@
 - name: wait for plex to be instanciated
   wait_for: port=32400 host=localhost state=started
 
+- name: get plex api token if it exists
+  shell: >
+    grep -q PlexOnlineToken /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Preferences.xml 
+    && sed -En 's/.*PlexOnlineToken="([^"]+)".*/\1/p' /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Preferences.xml
+  ignore_errors: true
+  register: plex_token
+
+- name: set plex token header
+  set_fact:
+    curl_plex_token_header: "-H 'X-Plex-Token: {{ plex_token.stdout }}'"
+  when: plex_token.stdout
+
 - name: check to see if plex folders is already setup
-  uri: url=http://localhost:32400/library/sections return_content=yes
+  command: > 
+    curl {{ curl_plex_token_header | default('') }} http://localhost:32400/library/sections
   register: plex_folder_response
 
 - name: setup folders on disk within plex
-  command: "curl -XPOST -s http://localhost:32400/library/sections?name={{item.name}}&type={{item.type}}&location={{item.location}}&agent={{item.agent}}&scanner={{item.scanner}}&language=en"
+  command: >
+    curl 
+    {{ curl_plex_token_header | default('') }} 
+    -XPOST 
+    -s 
+    http://localhost:32400/library/sections?name={{item.name}}&type={{item.type}}&location={{item.location}}&agent={{item.agent}}&scanner={{item.scanner}}&language=en
   with_items:
     - name: Movies
       location: "{{ storage_path }}/movies"
@@ -73,10 +91,14 @@
       type: photo
       agent: com.plexapp.agents.none
       scanner: Plex%20Photo%20Scanner
-  when: item.location not in plex_folder_response.content
+  when: item.location not in plex_folder_response.stdout
 
 - name: apply some plex settings
-  command: curl -XPUT http://localhost:32400/:/prefs?{{item.key}}={{item.value}}
+  command: >
+    curl 
+    {{ curl_plex_token_header | default('') }}
+    -XPUT
+    http://localhost:32400/:/prefs?{{item.key}}={{item.value}}
   with_items:
     - { key: FSEventLibraryUpdatesEnabled,     value: true }
     - { key: FSEventLibraryPartialScanEnabled, value: true }

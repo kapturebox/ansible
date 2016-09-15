@@ -7,7 +7,8 @@
 #######################
 
 - name: set hostname
-  hostname: name="{{ systemname }}"
+  hostname: 
+    name: "{{ systemname }}"
   register: hostname_task
 
 - name: trigger restart handler if needed
@@ -18,7 +19,7 @@
 - name: ensure kapture group is setup correctly
   group: name=kapture system=yes state=present
 
-- name: ensure {{ kapture_user }} user is setup correctly
+- name: "ensure {{ kapture_user }} user is setup correctly"
   user:
     groups: sudo,kapture
     name: "{{ kapture_user }}"
@@ -27,7 +28,9 @@
     state: present
 
 - name: ensure admin user is in kapture group
-  user: name="{{ ansible_ssh_user }}" groups=kapture,sudo
+  user: 
+    name: "{{ ansible_ssh_user }}" 
+    groups: kapture,sudo
   when: pi is defined and pi
 
 - name: ensure vagrant user is in kapture group
@@ -74,7 +77,10 @@
   when: ansible_lsb.id == "Raspbian"
 
 - name: install ansible for running locally
-  pip: name="{{ item.name }}" version="{{ item.version | default(omit) }}" state=present
+  pip: 
+    name: "{{ item.name }}" 
+    version: "{{ item.version | default(omit) }}" 
+    state: present
   with_items:
     - { name: ansible }
     - { name: setuptools, version: 23.0.0 }
@@ -92,6 +98,9 @@
   when: pi is defined and pi
 
 
+######################
+## NODEJS
+######################
 
 - name: setup new version of nodejs
   shell: curl -sL https://deb.nodesource.com/setup_6.x |  bash -
@@ -99,7 +108,12 @@
     creates: /etc/apt/sources.list.d/nodesource.list
 
 - name: ensure node is installed
-  apt: pkg="nodejs=6*" state=present
+  apt: 
+    pkg: "{{ item }}" 
+    state: present
+  with_items:
+    - nodejs=6*
+    - jq
 
 ######################
 ## KAPTURE APP
@@ -119,3 +133,12 @@
   apt:
     name: kapture
     state: latest
+
+
+######################
+## KAPTURE SETTINGS
+######################
+
+- name: if enabled setup flexget token
+  include: flexget.yml
+  when: flexget_enabled

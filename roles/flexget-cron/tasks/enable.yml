@@ -5,7 +5,6 @@
 ### FLEXGET STUFF
 #######################
 
-# should already have pip from initial setup
 - name: install flexget and deps
   pip: name="{{ item }}" state=latest
   with_items:

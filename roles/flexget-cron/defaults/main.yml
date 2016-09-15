@@ -2,3 +2,5 @@
 # defaults file for roles/flexget
 kapture_user: kapture
 flexget_check_frequency: 15
+
+flexget_cron_enabled: true

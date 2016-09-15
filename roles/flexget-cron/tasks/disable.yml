@@ -1,0 +1,13 @@
+---
+
+- name: remove config file
+  file:
+    state: absent
+    path: "~{{ kapture_user }}/.flexget/config.yml"
+
+
+- name: disable any existing cron jobs
+  cron:
+    name: flexget
+    user: "{{ kapture_user }}"
+    state: absent

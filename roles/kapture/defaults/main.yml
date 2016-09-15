@@ -1,2 +1,5 @@
 ---
 # defaults file for roles/kapture
+
+kapture_port: 8080
+flexget_enabled: yes

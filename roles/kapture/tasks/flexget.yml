@@ -1,0 +1,15 @@
+---
+# gets and sets the api token for kapture / flexget
+
+- name: grab web token from flexget
+  shell: >
+    flexget -c /etc/flexget/config.yml web showtoken | grep Token | sed 's/Token: \([A-Fa-f0-9]\+\)/\1/'
+  register: token
+
+- name: set token in kapture
+  uri:
+    url: "http://localhost:{{ kapture_port }}/api/plugin/com.flexget"
+    body_format: json
+    method: PUT
+    body: >
+      { "api_token": "{{ token.stdout }}" }
