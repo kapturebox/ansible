@@ -6,10 +6,12 @@
     flexget -c /etc/flexget/config.yml web showtoken | grep Token | sed 's/Token: \([A-Fa-f0-9]\+\)/\1/'
   register: token
 
-- name: set token in kapture
+- name: set flexget token in kapture
   uri:
     url: "http://localhost:{{ kapture_port }}/api/plugin/com.flexget"
     body_format: json
     method: PUT
-    body: >
-      { "api_token": "{{ token.stdout }}" }
+    body: "{{ item }}"
+  with_items:
+    - { api_token: "{{ token.stdout }}" }
+    - { enabled: true }

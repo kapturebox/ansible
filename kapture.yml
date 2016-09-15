@@ -6,7 +6,7 @@
   roles:
     - plex
     - transmission
-    - kapture
     - netatalk
     - flexget-daemon
     - flexget-cron
+    - kapture
