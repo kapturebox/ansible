@@ -50,7 +50,8 @@ Vagrant.configure(2) do |config|
       "default" => {
         "systemname" => "vagrant-kapture",
         "vagrant" => true,
-        "storage_block_device" => "/dev/sdb"
+        "storage_block_device" => "/dev/sdb",
+        "kapture_app_branch" => "unstable"
       }
     }
   end

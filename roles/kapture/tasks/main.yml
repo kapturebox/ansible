@@ -1,6 +1,7 @@
 ---
 # tasks file for roles/kapture
 
+- meta: flush_handlers
 
 #######################
 ### System STUFF
