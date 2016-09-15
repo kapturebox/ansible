@@ -37,6 +37,7 @@
   apt: pkg="{{ item }}" state=latest update_cache=yes force=yes
   with_items:
     - libc6
+    - curl
     - libav-tools
     - plexmediaserver
 

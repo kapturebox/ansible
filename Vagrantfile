@@ -4,8 +4,7 @@
 disk = '/tmp/kapture-vagrant-storage.vdi'
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "gbarbieru/xenial"
-  # config.vm.box_check_update = false
+  config.vm.box = "bento/ubuntu-16.04"
   config.vm.network "private_network", ip: "192.168.33.11"
   # config.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)"
 
@@ -17,7 +16,7 @@ Vagrant.configure(2) do |config|
     unless File.exist?(disk)
       vb.customize ['createhd', '--filename', disk, '--size', 1 * 1024]
     end
-    vb.customize ['storageattach', :id, '--storagectl', 'SATA', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', disk]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', disk]
   end
 
 
@@ -37,9 +36,6 @@ Vagrant.configure(2) do |config|
     pip install ansible markupsafe
 
     gem install fpm
-
-    # get rest of machine setup for kapture
-    # export ANSIBLE_CONFIG=/vagrant/ansible.cfg
   SHELL
 
   config.vm.provision :ansible_local do |ansible|
@@ -48,10 +44,11 @@ Vagrant.configure(2) do |config|
 
     ansible.host_vars = {
       "default" => {
-        "systemname" => "vagrant-kapture",
-        "vagrant" => true,
+        "systemname"           => "kapture-vagrant",
+        "vagrant"              => true,
         "storage_block_device" => "/dev/sdb",
-        "kapture_app_branch" => "unstable"
+        "kapture_app_branch"   => "unstable",
+        "reboots_during_run"   => false
       }
     }
   end
