@@ -1,0 +1,11 @@
+---
+
+- name: set transmission username / password in kapture
+  uri:
+    url: "http://localhost:{{ kapture_port }}/api/plugin/com.transmissionbt"
+    body_format: json
+    method: PUT
+    body: "{{ item }}"
+  with_items:
+    - {transmission_user: "{{ transmission_user }}"}
+    - {transmission_pass: "{{ transmission_pass }}"}

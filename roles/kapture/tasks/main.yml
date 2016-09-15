@@ -142,3 +142,7 @@
 - name: if enabled setup flexget token
   include: flexget.yml
   when: flexget_enabled
+
+- name: if enabled setup transmission settings
+  include: transmission.yml
+  when: transmission_enabled
