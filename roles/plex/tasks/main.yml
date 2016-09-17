@@ -77,7 +77,7 @@
       type: movie
       agent: com.plexapp.agents.imdb
       scanner: Plex%20Movie%20Scanner
-    - name: Movies
+    - name: Other
       location: "{{ storage_path }}/downloads"
       type: movie
       agent: com.plexapp.agents.imdb
