@@ -60,7 +60,14 @@
     state: present
   notify: restart netatalk
 
-- name: set permissions on home directory
+- name: ensure that directory points to usb disk spot if pi
+  file:
+    dest: /var/lib/kapture
+    state: soft
+    path: /media/usb
+  when: pi
+
+- name: set permissions on default download directory
   file:
     recurse: yes
     path: /var/lib/kapture
