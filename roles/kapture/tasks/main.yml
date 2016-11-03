@@ -64,7 +64,7 @@
   file:
     dest: /var/lib/kapture
     state: link
-    path: /media/usb
+    src: /media/usb
   when: pi is defined and pi
 
 - name: set permissions on default download directory
