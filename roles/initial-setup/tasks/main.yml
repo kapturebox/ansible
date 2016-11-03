@@ -94,10 +94,17 @@
   tags:
     - perms
 
+- name: ensure that directory points to usb disk spot if pi
+  file:
+    dest: "{{ download_path }}"
+    state: link
+    src: "{{ storage_path }}"
+  when: pi is defined and pi
+
 - name: make directories
   file:
     state: directory
-    path: "{{ storage_path }}/{{ item }}"
+    path: "{{ download_path }}/{{ item }}"
     owner: "{{ kapture_user }}"
     group: kapture
     mode: o+rwx,g+rwxs,o=rx
@@ -110,7 +117,7 @@
   acl:
     default: yes
     state: present
-    path: "{{ storage_path }}/{{ item }}"
+    path: "{{ download_path }}/{{ item }}"
     entity: kapture
     etype: group
     permissions: rwx

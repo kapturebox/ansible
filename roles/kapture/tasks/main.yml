@@ -60,17 +60,10 @@
     state: present
   notify: restart netatalk
 
-- name: ensure that directory points to usb disk spot if pi
-  file:
-    dest: /var/lib/downloads
-    state: link
-    src: /media/usb
-  when: pi is defined and pi
-
 - name: set permissions on default download directory
   file:
     recurse: yes
-    path: /var/lib/kapture
+    path: "{{ download_path }}"
     mode: 0775
     group: kapture
 

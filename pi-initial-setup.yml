@@ -13,6 +13,8 @@
 
 - hosts: all
   become: yes
+  vars_files:
+    - pi.yml
   roles:
     - initial-setup
     - plex
