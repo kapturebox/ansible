@@ -10,8 +10,10 @@
 - name: ensure setuptools is installed
   pip: name=setuptools state=latest
 
+# locked down for now since it's been in heavy development
+# TODO: unrestrict this
 - name: ensure flexget is installed
-  pip: name=flexget state=latest
+  pip: name=flexget state=present version=2.5.4
 
 - name: "ensure {{ flexget_system_user }} user exists"
   user:
