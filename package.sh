@@ -5,7 +5,7 @@ VERSION="4.0.${BUILD_NUMBER:-snapshot}"
 ITERATION="$(git rev-parse --short HEAD)"
 
 # clean and make dest dir
-rm $DESTDIR/* && rmdir $DESTDIR
+rm -f $DESTDIR/* && rmdir -f $DESTDIR
 mkdir -p $DESTDIR
 
 fpm -s dir -t deb -n kapture-ansible \
