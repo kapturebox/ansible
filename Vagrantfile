@@ -51,4 +51,6 @@ Vagrant.configure(2) do |config|
       }
     }
   end
+
+  config.vm.provision "shell", inline: "echo System built successfully.  Connect to http://kapture-vagrant.local/ to use."
 end

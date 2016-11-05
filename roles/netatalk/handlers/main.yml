@@ -3,3 +3,9 @@
 
 - name: restart netatalk
   service: name=netatalk state=restarted
+
+- name: restart avahi
+  service:
+    state: restarted
+    name: avahi-daemon
+    enabled: yes

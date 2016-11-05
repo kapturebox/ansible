@@ -6,7 +6,8 @@
   roles:
     - plex
     - transmission
-    - netatalk
     - flexget-daemon
     - flexget-cron
     - kapture
+    - netatalk
+    - lucazz.cifs_server
