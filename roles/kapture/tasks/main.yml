@@ -130,10 +130,13 @@
     repo: "deb https://kapture-apt.s3.amazonaws.com {{ kapture_app_branch }} main"
     update_cache: yes
 
-- name: install kapture
+- name: install kapture and kapture-ansible packages
   apt:
-    name: kapture
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - kapture
+    - kapture-ansible
 
 
 ######################

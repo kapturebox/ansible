@@ -1,12 +1,16 @@
 #!/bin/bash -e
 
 DESTDIR="$(dirname $0)/pkg"
-VERSION=${BUILD_NUMBER:-snapshot}
+VERSION="4.0.${BUILD_NUMBER:-snapshot}"
+ITERATION="$(git rev-parse --short HEAD)"
 
+# clean and make dest dir
+rm $DESTDIR/* && rmdir $DESTDIR
 mkdir -p $DESTDIR
 
 fpm -s dir -t deb -n kapture-ansible \
   -v $VERSION \
+  -i $ITERATION \
   -f \
   -a all \
   -p $DESTDIR \
