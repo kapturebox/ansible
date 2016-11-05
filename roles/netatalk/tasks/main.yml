@@ -22,3 +22,9 @@
     dest: /etc/netatalk/afpd.conf
     mode: 0644
   notify: restart netatalk
+
+- name: disable avahi-daemon
+  service:
+    state: stopped
+    name: avahi-daemon
+    enabled: no

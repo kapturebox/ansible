@@ -36,9 +36,6 @@ Vagrant.configure(2) do |config|
     pip install ansible markupsafe
 
     gem install fpm
-
-    # disable avahai so that it doesnt conflict with netatalk
-    service avahi-daemon disable && service avahi-daemon stop    
   SHELL
 
   config.vm.provision :ansible_local do |ansible|
