@@ -4,7 +4,7 @@
 disk = '/tmp/kapture-vagrant-storage.vdi'
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "bento/ubuntu-16.04"
+  config.vm.box = "boxcutter/ubuntu1604"
   config.vm.network "private_network", ip: "192.168.33.11"
   # config.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)"
 
