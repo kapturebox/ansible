@@ -14,7 +14,7 @@ fpm -s dir -t deb -n kapture-ansible \
   --force \
   --architecture all \
   --package $DESTDIR \
-  --exclude "**/*.deb" \
+  --exclude "**/pkg" \
   --exclude '**/.vagrant*' \
   --exclude '**/.git*' \
   --exclude '**/Vagrantfile' \
