@@ -9,11 +9,11 @@ rm $DESTDIR/* && rmdir $DESTDIR
 mkdir -p $DESTDIR
 
 fpm -s dir -t deb -n kapture-ansible \
-  -v $VERSION \
-  -i $ITERATION \
-  -f \
-  -a all \
-  -p $DESTDIR \
+  --version $VERSION \
+  --iteration $ITERATION \
+  --force \
+  --architecture all \
+  --package $DESTDIR \
   --exclude "**/*.deb" \
   --exclude '**/.vagrant*' \
   --exclude '**/.git*' \
