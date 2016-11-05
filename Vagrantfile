@@ -36,17 +36,19 @@ Vagrant.configure(2) do |config|
     pip install ansible markupsafe
 
     gem install fpm
+
+    # disable avahai so that it doesnt conflict with netatalk
+    service avahi-daemon disable && service avahi-daemon stop    
   SHELL
 
   config.vm.provision :ansible_local do |ansible|
-    ansible.playbook = "initial-setup.yml"
+    ansible.playbook = "kapture.yml"
     ansible.sudo = true
 
     ansible.host_vars = {
       "default" => {
         "systemname"           => "kapture-vagrant",
         "vagrant"              => true,
-        "storage_block_device" => "/dev/sdb",
         "kapture_app_branch"   => "unstable",
         "reboots_during_run"   => false
       }

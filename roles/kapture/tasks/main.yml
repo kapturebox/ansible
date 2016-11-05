@@ -62,6 +62,7 @@
 
 - name: set permissions on default download directory
   file:
+    state: directory
     recurse: yes
     path: "{{ download_path }}"
     mode: 0775

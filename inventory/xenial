@@ -1,5 +1,8 @@
 # xenial
-[all]
+[all:children]
+pi
+
+[pi]
 
 # stock
 ubuntu-mate           ansible_ssh_user=ubuntu ansible_ssh_pass=ubuntu pi=true

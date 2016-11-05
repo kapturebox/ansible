@@ -3,7 +3,7 @@
 ### SETUP REMOTE DEVICE (meant to be remote)
 ##############################################
 
-- hosts: all
+- hosts: pi
   gather_facts: no
   become: yes
   tasks:
@@ -11,12 +11,10 @@
       raw: (which python && which aptitude ) || apt-get install -y python python-apt aptitude
 
 
-- hosts: all
+- hosts: pi
   become: yes
-  vars_files:
-    - pi.yml
   roles:
-    - initial-setup
+    - pi-bootstrap
     - plex
     - transmission
     - netatalk
