@@ -64,7 +64,7 @@
   file:
     state: directory
     recurse: yes
-    path: "{{ download_path }}"
+    path: "{{ download_path }}/"
     mode: 0775
     group: kapture
 

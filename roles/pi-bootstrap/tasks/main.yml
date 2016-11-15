@@ -94,6 +94,15 @@
   tags:
     - perms
 
+- name: get type of folder download_path is
+  stat: 
+    path: "{{ download_path }}"
+  register: download_path_stat
+
+- name: move folder if download_path is dir
+  command: "mv -f {{ download_path }} {{ download_path }}.old"
+  when: download_path_stat.stat.isdir and pi is defined and pi
+
 - name: ensure that directory points to usb disk spot if pi
   file:
     dest: "{{ download_path }}"
