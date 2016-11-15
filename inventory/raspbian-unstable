@@ -1,0 +1,9 @@
+[all:children]
+pi
+
+[pi]
+# raspbian
+raspberrypi.local     ansible_ssh_user=pi pi=true kapture_app_branch=unstable ansible_ssh_pass=raspberry
+
+# mdns (after provision)
+kapture.local         ansible_ssh_user=pi pi=true kapture_app_branch=unstable
