@@ -24,7 +24,7 @@ Vagrant.configure(2) do |config|
 
     # install some tools for development on vagrant box, and ansible
     export DEBIAN_FRONTEND=noninteractive
-    apt-get install -y python-pip devscripts debhelper ruby ruby-dev git iptables-persistent python-dev libffi-dev libssl-dev
+    apt-get install -y python-pip devscripts debhelper ruby ruby-dev ruby-compass git iptables-persistent python-dev libffi-dev libssl-dev vim
     pip install --upgrade pip
     pip install ansible markupsafe
 
@@ -45,5 +45,12 @@ Vagrant.configure(2) do |config|
     }
   end
 
+
+  # dev tools, needed in case you wanna do dev
+  config.vm.provision "shell", inline: <<-DEVSHELL
+    npm install -g grunt-cli npm bower
+  DEVSHELL
+
+  # notify user it's all good.'
   config.vm.provision "shell", inline: "echo System built successfully.  Connect to http://kapture-vagrant.local/ to use."
 end
