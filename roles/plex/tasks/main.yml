@@ -21,25 +21,23 @@
 - name: install httplib2 for calling plex commands via ansible
   pip: name=httplib2
 
-- name: setup plex repo key [arm]
-  apt_key: url='https://dev2day.de/pms/dev2day-pms.gpg.key' state=present
-  when: ansible_architecture == 'armv7l'
-
-- name: setup plex repo [arm]
-  apt_repository: repo='deb https://dev2day.de/pms/ jessie main' state=present
-  when: ansible_architecture == 'armv7l'
-
-- name: setup plex repo [x86_64]
-  apt_repository: repo='deb http://ubuntu.azuras.net/ trusty main' state=present
-  when: ansible_architecture == 'x86_64'
-
-- name: install plex server and components
-  apt: pkg="{{ item }}" state=latest update_cache=yes force=yes
+# start using the api from plex to get the package
+- name: install plex prereqs
+  apt: 
+    pkg: "{{ item }}" 
+    state: latest 
   with_items:
     - libc6
     - curl
     - libav-tools
-    - plexmediaserver
+
+- name: install plex if on x86 system
+  include: x86_install.yml
+  when: "'x86' in ansible_architecture"
+
+- name: install plex on arm system
+  include: armv7_install.yml
+  when: ansible_architecture == 'armv7l'
 
 - name: ensure service is running
   service: name=plexmediaserver state=running

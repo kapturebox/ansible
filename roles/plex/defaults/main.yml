@@ -1,2 +1,4 @@
 ---
 # defaults file for roles/plex
+
+plex_releases_json_url: https://plex.tv/api/downloads/1.json

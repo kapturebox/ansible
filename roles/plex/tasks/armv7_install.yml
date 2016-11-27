@@ -1,0 +1,11 @@
+- name: setup plex repo key [arm]
+  apt_key: url='https://dev2day.de/pms/dev2day-pms.gpg.key' state=present
+
+- name: setup plex repo [arm]
+  apt_repository: repo='deb https://dev2day.de/pms/ jessie main' state=present
+
+- name: ensure plex package is installed
+  apt:
+    name: plexmediaserver
+    state: latest
+    update_cache: yes

@@ -1,0 +1,29 @@
+- name: ensure jq is installed
+  apt:
+    state: present
+    pkg: jq
+
+- name: get latest version 
+  shell: "curl -s {{ plex_releases_json_url }} | jq -r '.computer.Linux.version'"
+  register: plex_latest_version
+
+- name: get release obj
+  shell: >
+    curl -s {{ plex_releases_json_url }} | jq '.computer.Linux.releases[] | select(.build=="linux-{{ ansible_distribution | lower }}-{{ ansible_architecture }}" and .distro=="{{ ansible_distribution | lower }}")'
+  register: plex_latest_release
+
+- name: get currently installed plex (if any)
+  shell: "dpkg-query --showformat='${Version}' --show plexmediaserver"
+  register: currently_installed_plex
+  ignore_errors: true
+
+- set_fact:
+    latest_release_obj: "{{ plex_latest_release.stdout | from_json }}"
+    latest_version: "{{ plex_latest_version.stdout }}"
+    currently_installed_version: "{{ currently_installed_plex.stdout }}"
+
+- name: install most recent version of plex package
+  apt:
+    state: present
+    deb: "{{ latest_release_obj.url }}"
+  when: latest_version != currently_installed_version
