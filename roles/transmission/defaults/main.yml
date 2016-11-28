@@ -1,2 +1,4 @@
 ---
 # defaults file for roles/transmission
+
+transmission_random_password: false

@@ -11,10 +11,19 @@
 - name: stop transmission
   service: name=transmission-daemon state=stopped
 
+# lets randomize this password, we shouldnt need it
+- name: set random password
+  set_fact:
+    transmission_pass: "{{ lookup( 'pipe', 'openssl rand -hex 20' ) }}"
+  when: transmission_random_password
+
+- name: ensure that /etc/transmission-daemon/settings.json file is removed (since it does nothing)
+  file: state=absent path=/etc/transmission-daemon/settings.json
+
 - name: drop in transmission-daemon config file
   template:
     src: settings.json.j2
-    dest: /etc/transmission-daemon/settings.json
+    dest: /var/lib/transmission-daemon/info/settings.json
     mode: 0644
 
 - name: start transmission
