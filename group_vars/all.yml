@@ -11,8 +11,7 @@ kapture_app_branch: stable  # stable / unstable
 
 download_path: /var/lib/kapture/downloads  # should be mounted and handled automatically with usbmount
 
-transmission_user: admin
-transmission_pass: password
+transmission_random_password: yes
 
 flexget_check_frequency: 15   # minutes
 flexget_cron_enabled: false   # allow daemon to take over

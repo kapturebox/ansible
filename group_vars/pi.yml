@@ -3,5 +3,3 @@
 
 storage_path: /media/usb  # should be mounted and handled automatically with usbmount
 storage_block_device: /dev/sda
-
-transmission_random_password: true
