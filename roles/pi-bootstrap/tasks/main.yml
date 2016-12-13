@@ -41,6 +41,7 @@
     - cpufreqd
     - cpufrequtils
     - vim
+    - atop 
 
 - name: ensure kapture group is setup correctly
   group: name=kapture system=yes state=present

@@ -5,4 +5,4 @@
   shell: shutdown -r 1 "ansible reboot triggered"
   async: 0
   poll: 0
-  when: reboots_during_run
+  when: reboots_during_run | bool

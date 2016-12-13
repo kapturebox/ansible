@@ -6,4 +6,4 @@
   async: 0
   poll: 0
   ignore_errors: true
-  when: pi is defined and pi and reboots_during_run
+  when: ( pi | bool ) and ( reboots_during_run | bool )
