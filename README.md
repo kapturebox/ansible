@@ -10,6 +10,46 @@ Configured to use:
 * Samba: Pointing to storage device
 
 
+Running via vagrant
+-------------------
+
+This repo is set up to be able to spin up a new kapture node locally, without having to go through the using your own pi hardware and whatnot.
+
+
+## OSX pre-req's
+
+You'll need the following tools installed first:
+
+```bash
+# Install Brew if not already installed
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# Install Cask within brew
+brew tap caskroom/cask
+
+# use Brew to install vagrant and virtualbox 
+brew cask install vagrant virtualbox
+``` 
+
+## Starting up kapture in vagrant
+
+To get started, simply run the following:
+
+```bash
+vagrant up
+```
+
+This will take some time to set up kapture the way it needs to be configured. In the meantime, grab a beer.
+
+Once that's complete (you may see some warnings and errors but as long as it gets to a part where it says `System built successfully.  Connect to...` you're good to go).  Then simply connect to:
+
+[http://kapture-vagrant.local](http://kapture-vagrant.local)
+
+or if your mDNS isn't working:
+
+[http://192.168.33.10/](http://192.168.33.11/)
+
+
 Initial pi setup
 ----------------
 
