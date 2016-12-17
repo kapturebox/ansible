@@ -57,6 +57,29 @@
     curl_plex_token_header: "-H 'X-Plex-Token: {{ plex_token.stdout }}'"
   when: plex_token.stdout
 
+- name: apply some plex settings
+  command: >
+    curl 
+    {{ curl_plex_token_header | default('') }}
+    -XPUT
+    http://localhost:32400/:/prefs?{{item.key}}={{item.value}}
+  with_items:
+    - { key: FSEventLibraryUpdatesEnabled,     value: true }
+    - { key: FSEventLibraryPartialScanEnabled, value: true }
+    - { key: watchMusicSections,               value: true }
+    - { key: allowMediaDeletion,               value: true }
+    - { key: EnableIPv6,                       value: true }
+    - { key: collectUsageData,                 value: false }
+    - { key: TranscoderQuality,                value: 1 }
+    # ensure that EULA for Plex is presented to user so we dont violate their terms
+    - { key: AcceptedEULA,                     value: true }
+    - { key: FriendlyName,                     value: "kapture" }
+    # - { key: logDebug,                         value: true }
+
+# weird delay required for plex folder setup..
+- pause: seconds=60
+
+
 - name: check to see if plex folders is already setup
   command: > 
     curl {{ curl_plex_token_header | default('') }} http://localhost:32400/library/sections
@@ -68,7 +91,7 @@
     {{ curl_plex_token_header | default('') }} 
     -XPOST 
     -s 
-    http://localhost:32400/library/sections?name={{item.name}}&type={{item.type}}&location={{item.location}}&agent={{item.agent}}&scanner={{item.scanner}}&language=en
+    http://localhost:32400/library/sections?name={{folder.name}}&type={{folder.type}}&location={{folder.location}}&agent={{folder.agent}}&scanner={{folder.scanner}}&language=en
   with_items:
     - name: Movies
       location: "{{ download_path }}/movies"
@@ -95,26 +118,9 @@
       type: photo
       agent: com.plexapp.agents.none
       scanner: Plex%20Photo%20Scanner
-  when: item.location not in plex_folder_response.stdout
-
-- name: apply some plex settings
-  command: >
-    curl 
-    {{ curl_plex_token_header | default('') }}
-    -XPUT
-    http://localhost:32400/:/prefs?{{item.key}}={{item.value}}
-  with_items:
-    - { key: FSEventLibraryUpdatesEnabled,     value: true }
-    - { key: FSEventLibraryPartialScanEnabled, value: true }
-    - { key: watchMusicSections,               value: true }
-    - { key: allowMediaDeletion,               value: true }
-    - { key: EnableIPv6,                       value: true }
-    - { key: collectUsageData,                 value: false }
-    - { key: TranscoderQuality,                value: 1 }
-    # ensure that EULA for Plex is presented to user so we dont violate their terms
-    # - { key: AcceptedEULA,                     value: true }
-    # - { key: logDebug,                         value: true }
-
+  when: folder.location not in plex_folder_response.stdout
+  loop_control: 
+    loop_var: folder
 
 - name: install conversion script (convert-avi-to-x264.sh) for if plex cant convert on the fly
   copy:
