@@ -4,10 +4,23 @@
 - hosts: all
   become: yes
   roles:
-    - plex
-    - transmission
-    - flexget-daemon
-    - flexget-cron
-    - kapture
-    - netatalk
-    - lucazz.cifs_server
+    - role: plex
+      tags: plex
+
+    - role: transmission
+      tags: transmission
+
+    - role: flexget-daemon
+      tags: flexget-daemon
+
+    - role: flexget-cron
+      tags: flexget-cron
+
+    - role: kapture
+      tags: kapture
+      
+    - role: netatalk
+      tags: netatalk
+      
+    - role: lucazz.cifs_server
+      tags: lucazz.cifs_server
