@@ -6,8 +6,13 @@
 #######################
 ### NETATALK STUFF
 #######################
-- name: install netatalk
-  apt: pkg=netatalk state=present
+- name: install netatalk and avahi
+  apt: 
+    pkg: "{{ item }}" 
+    state: present
+  with_items:
+    - netatalk
+    - avahi-daemon
   notify: restart avahi
 
 - name: config netatalk volumes

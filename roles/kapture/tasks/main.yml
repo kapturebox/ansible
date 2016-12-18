@@ -86,15 +86,15 @@
   tags:
     - perms
 
-- name: set permissions on default download directory
-  file:
-    state: directory
-    recurse: yes
-    path: "{{ download_path }}/"
-    mode: 0775
-    group: kapture
-  tags:
-    - perms
+# - name: set permissions on default download directory
+#   file:
+#     state: directory
+#     recurse: yes
+#     path: "{{ download_path }}/"
+#     mode: 0775
+#     group: kapture
+#   tags:
+#     - perms
 
 - name: install pip from apt
   apt: 
