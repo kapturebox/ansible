@@ -4,3 +4,13 @@
 kapture_port: 8080
 flexget_enabled: yes
 transmission_enabled: yes
+
+
+storage_directories:
+  - tvshows
+  - movies
+  - music
+  - photos
+  - downloads
+  - watch
+  - tmp

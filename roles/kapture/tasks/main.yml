@@ -22,7 +22,7 @@
 
 - name: "ensure {{ kapture_user }} user is setup correctly"
   user:
-    groups: sudo,kapture
+    groups: "sudo,kapture"
     name: "{{ kapture_user }}"
     createhome: yes
     home: /var/lib/kapture
@@ -31,11 +31,13 @@
 - name: ensure admin user is in kapture group
   user: 
     name: "{{ ansible_ssh_user }}" 
-    groups: kapture,sudo
+    groups: "kapture,sudo"
   when: pi is defined and pi
 
 - name: ensure vagrant user is in kapture group
-  user: name=vagrant groups=kapture,sudo
+  user: 
+    name: vagrant 
+    groups: "kapture,sudo"
   when: vagrant is defined and vagrant
 
 - name: ensure users are in kapture group
@@ -49,16 +51,40 @@
 
 - name: ensure kapture user is created and in right groups
   user:
-    groups: sudo,kapture
+    groups: "sudo,kapture"
     name: "{{ kapture_user }}"
     state: present
 
 - name: ensure nobody user is in kapture group
   user:
     name: nobody
-    groups: kapture,nogroup
+    groups: "kapture,nogroup"
     state: present
   notify: restart netatalk
+
+- name: make directories
+  file:
+    state: directory
+    path: "{{ download_path }}/{{ item }}"
+    owner: "{{ kapture_user }}"
+    group: kapture
+    mode: "o+rwx,g+rwxs,o=rx"
+    recurse: yes
+  with_items: "{{ storage_directories }}"
+  tags:
+    - perms
+
+- name: setfacl on directories
+  acl:
+    default: yes
+    state: present
+    path: "{{ download_path }}/{{ item }}"
+    entity: kapture
+    etype: group
+    permissions: rwx
+  with_items: "{{ storage_directories }}"
+  tags:
+    - perms
 
 - name: set permissions on default download directory
   file:
@@ -67,9 +93,13 @@
     path: "{{ download_path }}/"
     mode: 0775
     group: kapture
+  tags:
+    - perms
 
 - name: install pip from apt
-  apt: pkg=python-pip state=present
+  apt: 
+    pkg: python-pip 
+    state: present
   when: ansible_lsb.id != "Raspbian"
 
 - block:

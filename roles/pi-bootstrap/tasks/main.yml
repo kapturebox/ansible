@@ -110,27 +110,3 @@
     state: link
     src: "{{ storage_path }}"
   when: pi is defined and pi
-
-- name: make directories
-  file:
-    state: directory
-    path: "{{ download_path }}/{{ item }}"
-    owner: "{{ kapture_user }}"
-    group: kapture
-    mode: o+rwx,g+rwxs,o=rx
-    recurse: yes
-  with_items: "{{ storage_directories }}"
-  tags:
-    - perms
-
-- name: setfacl on directories
-  acl:
-    default: yes
-    state: present
-    path: "{{ download_path }}/{{ item }}"
-    entity: kapture
-    etype: group
-    permissions: rwx
-  with_items: "{{ storage_directories }}"
-  tags:
-    - perms
