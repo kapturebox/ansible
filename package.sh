@@ -5,10 +5,10 @@ VERSION="4.0.${BUILD_NUMBER:-snapshot}"
 ITERATION="$(git rev-parse --short HEAD)"
 
 # clean and make dest dir
-test -d $DESTDIR && rm -f $DESTDIR/* && rmdir -p $DESTDIR
+test -d $DESTDIR && rm -rf $DESTDIR
 mkdir -p $DESTDIR
 
-fpm -s dir -t deb -n kapture-ansible \
+fpm -s dir -t deb -n kapture-ansible --verbose \
   --version $VERSION \
   --iteration $ITERATION \
   --force \
@@ -20,4 +20,4 @@ fpm -s dir -t deb -n kapture-ansible \
   --exclude '**/Vagrantfile' \
   --exclude '**/package.sh' \
   ./=/var/kapture/ansible \
-  ./bin=/usr/local/bin
+  ./bin/=/usr/local/bin
