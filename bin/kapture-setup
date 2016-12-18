@@ -3,6 +3,7 @@ set -e
 
 BASE_PATH=/var/kapture/ansible
 ANSIBLE_CONFIG="$BASE_PATH/ansible.cfg"
+EXTRA_VARS=/etc/kapture/system_settings.yml
 
 if ! which pip > /dev/null; then
   echo "pip required, please install via: "
@@ -15,4 +16,4 @@ if ! which ansible > /dev/null; then
   pip install -U ansible
 fi
 
-ansible-playbook -c local -i 'localhost,' $BASE_PATH/kapture.yml
+ansible-playbook -c local -i 'localhost,' -e $EXTRA_VARS $BASE_PATH/kapture.yml
