@@ -5,7 +5,7 @@ VERSION="4.0.${BUILD_NUMBER:-snapshot}"
 ITERATION="$(git rev-parse --short HEAD)"
 
 # clean and make dest dir
-rm -f $DESTDIR/* && rmdir -p $DESTDIR
+test -d $DESTDIR && rm -f $DESTDIR/* && rmdir -p $DESTDIR
 mkdir -p $DESTDIR
 
 fpm -s dir -t deb -n kapture-ansible \
@@ -19,4 +19,5 @@ fpm -s dir -t deb -n kapture-ansible \
   --exclude '**/.git*' \
   --exclude '**/Vagrantfile' \
   --exclude '**/package.sh' \
-  ./=/var/kapture/ansible
+  ./=/var/kapture/ansible \
+  ./bin=/usr/local/bin

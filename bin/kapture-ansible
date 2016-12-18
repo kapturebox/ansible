@@ -1,0 +1,6 @@
+#!/bin/bash
+
+BASE_PATH=/var/kapture/ansible
+ANSIBLE_CONFIG="$BASE_PATH/ansible.cfg"
+
+ansible-playbook -c local -i 'localhost,' $BASE_PATH/kapture.yml
