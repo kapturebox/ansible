@@ -19,5 +19,6 @@ fpm -s dir -t deb -n kapture-ansible --verbose \
   --exclude '**/.git*' \
   --exclude '**/Vagrantfile' \
   --exclude '**/package.sh' \
+  --depends python-pip \
   ./=/var/kapture/ansible \
   ./bin/=/usr/local/bin
