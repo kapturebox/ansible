@@ -16,4 +16,4 @@ if ! which ansible > /dev/null; then
   pip install -U ansible
 fi
 
-ansible-playbook -c local -i 'localhost,' -e $EXTRA_VARS $BASE_PATH/kapture.yml
+ansible-playbook -c local -i 'localhost,' -e $EXTRA_VARS $BASE_PATH/kapture.yml $*
