@@ -60,5 +60,14 @@
     group: root
   notify:
     - reload systemd
-    - enable flexget service
-    - start flexget service
+
+- meta: flush_handlers
+
+- name: enable flexget service
+  service:
+    name: flexget
+    enabled: yes
+
+- name: send notify to start flexget service
+  command: /bin/true
+  notify: start flexget service

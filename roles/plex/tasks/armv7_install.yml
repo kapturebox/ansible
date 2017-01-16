@@ -6,6 +6,9 @@
 
 - name: ensure plex package is installed
   apt:
-    name: plexmediaserver
+    name: "{{ item }}"
     state: latest
     update_cache: yes
+  with_items:
+    - plexmediaserver
+    - plexmediaserver-installer

@@ -5,11 +5,6 @@
   command: >
     /bin/systemctl daemon-reload
 
-- name: enable flexget service
-  service:
-    name: flexget
-    enabled: yes
-
 - name: stop flexget service
   service:
     name: flexget

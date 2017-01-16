@@ -71,13 +71,14 @@
     - { key: EnableIPv6,                       value: true }
     - { key: collectUsageData,                 value: false }
     - { key: TranscoderQuality,                value: 1 }
-    # ensure that EULA for Plex is presented to user so we dont violate their terms
-    - { key: AcceptedEULA,                     value: true }
-    - { key: FriendlyName,                     value: "kapture" }
+    - { key: AcceptedEULA,                     value: true }  # may need to remove this at some point legally
+    - { key: FriendlyName,                     value: kapture }
+    - { key: TranscodeCountLimit,              value: 1 }
+    - { key: ScannerLowPriority,               value: 1 }
     # - { key: logDebug,                         value: true }
 
 # weird delay required for plex folder setup..
-- pause: seconds=60
+- pause: seconds=30
 
 
 - name: check to see if plex folders is already setup
