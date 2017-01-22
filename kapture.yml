@@ -13,12 +13,12 @@
     - role: flexget-daemon
       tags: flexget-daemon
 
-    - role: flexget-cron
-      tags: flexget-cron
-
     - role: kapture
       tags: kapture
       
+    - role: flexget-cron
+      tags: flexget-cron
+
     - role: netatalk
       tags: netatalk
       

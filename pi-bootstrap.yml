@@ -18,7 +18,7 @@
     - plex
     - transmission
     - flexget-daemon
-    - flexget-cron
     - kapture
+    - flexget-cron
     - netatalk
     - lucazz.cifs_server
