@@ -158,6 +158,7 @@
   with_items:
     - kapture
     - kapture-ansible
+    - kapture-iot
 
 
 ######################
