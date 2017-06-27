@@ -124,7 +124,7 @@
 ## NODEJS
 ######################
 
-- name: setup nodejs 7.x apt repo
+- name: setup nodejs 8.x apt repo
   shell: curl -sL https://deb.nodesource.com/setup_8.x |  bash -
   args:
     creates: /etc/apt/sources.list.d/nodesource.list
