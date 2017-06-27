@@ -125,7 +125,7 @@
 ######################
 
 - name: setup nodejs 7.x apt repo
-  shell: curl -sL https://deb.nodesource.com/setup_7.x |  bash -
+  shell: curl -sL https://deb.nodesource.com/setup_8.x |  bash -
   args:
     creates: /etc/apt/sources.list.d/nodesource.list
 
@@ -134,7 +134,7 @@
     pkg: "{{ item }}" 
     state: present
   with_items:
-    - nodejs=7*
+    - nodejs=8*
     - jq
 
 ######################
