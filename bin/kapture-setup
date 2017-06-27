@@ -12,7 +12,7 @@ if ! which pip > /dev/null; then
   exit 1
 fi
 
-if -f $EXTRA_VARS_FILE; then
+if [ -f $EXTRA_VARS_FILE ]; then
   EXTRA_ARGS="$EXTRA_ARGS -e @$EXTRA_VARS_FILE"
 fi
 
