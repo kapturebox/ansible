@@ -1,5 +1,6 @@
-Kapture pi system setup
-=======================
+# Kapture Ansible role
+
+> Ansible role that provisions a target system with kapture setup
 
 Configured to use:
 
@@ -10,11 +11,9 @@ Configured to use:
 * Samba: Pointing to storage device
 
 
-Running via vagrant
--------------------
+# Running via vagrant
 
 This repo is set up to be able to spin up a new kapture node locally, without having to go through the using your own pi hardware and whatnot.
-
 
 ## OSX pre-req's
 
@@ -50,8 +49,7 @@ or if your mDNS isn't working:
 [http://192.168.33.10/](http://192.168.33.11/)
 
 
-Initial pi setup
-----------------
+# Pi setup
 
 First use the following image flashed onto a sd card in order to get a base OS:
 
@@ -74,9 +72,9 @@ It will also set a SSH password for the ```ubuntu``` user of: ```kapture is the 
 Hardware requirements
 ---------------------
 
-* [Bananapi (or other pi's) w/ lubuntu 10.04.3](https://drive.google.com/open?id=0BzoTh3Vdt47ffkNUM0J0ZnVXbXljTTBqazZPX3dSaWZ3MGRfTTBUU3F0OWtnd3NBdFhRRlU)
-* SSH key-based login configured properly with sudo access from machine running ansible
-* Storage device setup correctly (and configured in system-setup.yml)
+* Raspberry PI (or other pi's) w/ ubuntu 16.04
+* SSH key-based login configured properly with sudo access from machine running ansible (`ssh_authorized_keys`)
+* Storage device setup, connected, and working correctly (you may need to change the target device via `storage_block_device`.  See `group_vars/pi.yml`)
 
 
 Troubleshooting
