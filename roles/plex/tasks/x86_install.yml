@@ -17,7 +17,8 @@
   register: currently_installed_plex
   ignore_errors: true
 
-- set_fact:
+- name: set facts about version number to download
+  set_fact:
     latest_release_obj: "{{ plex_latest_release.stdout | from_json }}"
     latest_version: "{{ plex_latest_version.stdout }}"
     currently_installed_version: "{{ currently_installed_plex.stdout }}"

@@ -41,6 +41,11 @@
 
 - name: ensure service is running
   service: name=plexmediaserver state=running
+  when: not container
+
+- name: start service [if container based]
+  shell: /usr/sbin/start_pms &
+  when: container
 
 - name: wait for plex to be instanciated
   wait_for: port=32400 host=localhost state=started

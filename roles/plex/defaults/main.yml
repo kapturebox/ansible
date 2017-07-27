@@ -2,3 +2,7 @@
 # defaults file for roles/plex
 
 plex_releases_json_url: https://plex.tv/api/downloads/1.json
+
+# use this if you intend to put plex into a container
+# assumes you have entrypoint configured properly
+container: no

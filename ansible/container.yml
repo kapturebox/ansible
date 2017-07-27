@@ -1,0 +1,32 @@
+version: '2'
+
+
+services:
+  plex:
+    image: ubuntu:16.04
+    ports:
+      - "32400:32400"
+    entrypoint: /usr/sbin/start_pms
+
+
+  transmission:
+    # image: dperson/transmission
+    image: ubuntu:16.04
+    # restart: always
+
+  flexget:
+    image: ubuntu:16.04
+
+
+  kapture:
+    image: ubuntu:16.04
+    ports:
+      - "8080:8080"
+    volumes:
+      - /config
+    links:
+      - plex
+      - transmission
+    working_dir: /var/kapture/server
+    entrypoint: ["nodejs", "app.js"]
+    restart: always

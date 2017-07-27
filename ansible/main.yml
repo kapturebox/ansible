@@ -18,11 +18,31 @@
     - raw: (which python && which aptitude ) || apt-get install -y python python-apt aptitude
     - raw: (which pip) | apt-get install -y python-pip
 
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - yum: name=openssl
 
 - hosts: plex
+  vars_files:
+    - vars.yml
   roles:
     - plex
 
 - hosts: transmission
+  vars_files:
+    - vars.yml
   roles:
     - transmission
+
+- hosts: kapture
+  vars_files:
+    - vars.yml
+  roles:
+    - kapture
+
+- hosts: flexget
+  vars_files:
+    - vars.yml
+  roles:
+    - flexget-daemon

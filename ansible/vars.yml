@@ -1,0 +1,9 @@
+---
+
+container: yes
+download_path: /var/lib/kapture/downloads  # should be mounted and handled automatically with usbmount
+transmission_random_password: yes
+flexget_check_frequency: 15   # minutes
+flexget_cron_enabled: false   # allow daemon to take over
+
+kapture_app_branch: unstable

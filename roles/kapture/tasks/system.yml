@@ -1,0 +1,101 @@
+---
+
+
+- name: set hostname
+  hostname: 
+    name: "{{ systemname }}"
+  when: not container
+  register: hostname_task
+
+- name: trigger restart handler if needed
+  command: /bin/true # noop
+  when: hostname_task.changed and pi is defined and pi
+  notify: restart device
+
+- name: ensure kapture group is setup correctly
+  group: name=kapture system=yes state=present
+
+- name: "ensure {{ kapture_user }} user is setup correctly"
+  user:
+    groups: "sudo,kapture"
+    name: "{{ kapture_user }}"
+    createhome: yes
+    home: /var/lib/kapture
+    state: present
+
+- name: ensure admin user is in kapture group
+  user: 
+    name: "{{ ansible_ssh_user }}" 
+    groups: "kapture,sudo"
+  when: pi is defined and pi
+
+- name: ensure vagrant user is in kapture group
+  user: 
+    name: vagrant 
+    groups: "kapture,sudo"
+  when: vagrant is defined and vagrant
+
+- name: ensure users are in kapture group
+  user:
+    name: "{{ item }}"
+    groups: kapture
+    state: present
+  with_items:
+    - plex
+    - debian-transmission
+
+- name: ensure kapture user is created and in right groups
+  user:
+    groups: "sudo,kapture"
+    name: "{{ kapture_user }}"
+    state: present
+  when: not container
+
+- name: ensure nobody user is in kapture group
+  user:
+    name: nobody
+    groups: "kapture,nogroup"
+    state: present
+  notify: restart netatalk
+
+- name: make directories
+  file:
+    state: directory
+    path: "{{ download_path }}/{{ item }}"
+    owner: "{{ kapture_user }}"
+    group: kapture
+    mode: "o+rwx,g+rwxs,o=rx"
+    recurse: yes
+  with_items: "{{ storage_directories }}"
+  tags:
+    - perms
+
+- name: setfacl on directories
+  acl:
+    default: yes
+    state: present
+    path: "{{ download_path }}/{{ item }}"
+    entity: kapture
+    etype: group
+    permissions: rwx
+  with_items: "{{ storage_directories }}"
+  tags:
+    - perms
+
+
+
+- name: ensure sudo group has passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%sudo   ALL=(ALL:ALL) ALL$"
+    line:    "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL"
+  when: pi is defined and pi
+
+
+- name: install some system dependent packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - iptables-persistent
+    - kapture-ansible
