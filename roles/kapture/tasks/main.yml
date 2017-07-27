@@ -36,14 +36,8 @@
 ## NODEJS
 ######################
 
-- name: get nodejs install script
-  uri:
-    url: https://deb.nodesource.com/setup_7.x
-    dest: /tmp/node.sh
-    mode: 0755
-
-- name: setup nodejs 7.x apt repo
-  command: /tmp/node.sh
+- name: setup nodejs 8.x apt repo
+  shell: curl -sL https://deb.nodesource.com/setup_8.x |  bash -
   args:
     creates: /etc/apt/sources.list.d/nodesource.list
 
@@ -53,7 +47,7 @@
     state: present
     update_cache: yes
   with_items:
-    - nodejs=7*
+    - nodejs=8*
     - jq
 
 - name: install ngrok if needed
