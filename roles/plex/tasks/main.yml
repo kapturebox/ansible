@@ -74,7 +74,7 @@
     - { key: watchMusicSections,               value: true }
     - { key: allowMediaDeletion,               value: true }
     - { key: EnableIPv6,                       value: true }
-    - { key: collectUsageData,                 value: false }
+    # - { key: collectUsageData,                 value: false }
     - { key: TranscoderQuality,                value: 1 }
     - { key: AcceptedEULA,                     value: true }  # may need to remove this at some point legally
     - { key: FriendlyName,                     value: kapture }
