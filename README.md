@@ -81,7 +81,3 @@ Troubleshooting
 ---------------
 
 If plex won't play certain videos because the bananapi isn't powerful enough, you'll need to use the included script ```convert-avi-to-x264.sh``` on the file that won't play properly.
-
-
-
-
