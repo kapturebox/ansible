@@ -84,3 +84,4 @@ If plex won't play certain videos because the bananapi isn't powerful enough, yo
 
 
 
+
